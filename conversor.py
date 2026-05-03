@@ -1,6 +1,5 @@
 from flask import Flask, request, send_file
 import yt_dlp
-import os
 
 app = Flask(__name__)
 
@@ -25,9 +24,10 @@ def index():
         return send_file("audio.mp3", as_attachment=True)
 
     return """
-    <h1>Conversor YouTube → MP3</h1>
+    <h1>Conversor Online para MP3</h1>
     <form method="post">
-        <input name="url" placeholder="Cole o link aqui" style="width:300px;">
+        <input name="url" placeholder="Cole o link aqui" style="width:350px;padding:10px;">
         <button type="submit">Converter</button>
     </form>
+    <p>Use apenas vídeos próprios, livres ou com autorização.</p>
     """
