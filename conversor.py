@@ -13,19 +13,22 @@ def index():
             return "Cole um link válido"
 
         try:
-            # Remove arquivo antigo se existir
             if os.path.exists("audio.mp3"):
                 os.remove("audio.mp3")
 
             opcoes = {
                 "format": "bestaudio/best",
                 "outtmpl": "audio.%(ext)s",
+                "quiet": True,
+                "noplaylist": True,
+                "http_headers": {
+                    "User-Agent": "Mozilla/5.0"
+                },
                 "postprocessors": [{
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": "mp3",
                     "preferredquality": "192",
-                }],
-                "quiet": True
+                }]
             }
 
             with yt_dlp.YoutubeDL(opcoes) as ydl:
@@ -40,13 +43,10 @@ def index():
             return f"Erro: {str(e)}"
 
     return """
-    <h1>Conversor Online para MP3</h1>
+    <h1>Conversor Online MP3</h1>
     <form method="post">
         <input name="url" placeholder="Cole o link aqui" style="width:350px;padding:10px;">
         <button type="submit">Converter</button>
     </form>
-    <p>Use apenas vídeos próprios, livres ou com autorização.</p>
+    <p>Alguns vídeos podem não funcionar devido a bloqueios do YouTube.</p>
     """
-
-if __name__ == "__main__":
-    app.run(debug=True)
